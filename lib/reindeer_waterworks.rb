@@ -8,6 +8,8 @@ module ReindeerWaterworks
   module Transforms
   end
 
+  module Destinations
+  end
 end
 
 require 'reindeer_waterworks/version'
