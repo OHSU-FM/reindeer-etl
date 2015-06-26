@@ -8,7 +8,6 @@ module ReindeerWaterworks::Sources
     
         def each
             @csv.each do |row|
-                binding.pry 
                 yield(row.to_hash)
             end
             @csv.close

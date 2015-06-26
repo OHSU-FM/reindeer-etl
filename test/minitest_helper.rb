@@ -1,7 +1,8 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'pry'
 require 'reindeer_waterworks'
-
+require 'minitest/autorun'
 require 'minitest/unit'
 require 'minitest/pride'
-require 'minitest/autorun'
 
+require File.expand_path('../../lib/reindeer_waterworks.rb', __FILE__)
+$dir = File.dirname(File.expand_path(__FILE__))
