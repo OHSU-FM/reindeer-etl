@@ -1,5 +1,4 @@
 require 'pry'
-require 'reindeer_waterworks'
 require 'minitest/autorun'
 require 'minitest/unit'
 require 'minitest/pride'
