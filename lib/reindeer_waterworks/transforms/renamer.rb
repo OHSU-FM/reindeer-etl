@@ -8,7 +8,7 @@ module ReindeerWaterworks::Transforms
 
         def process(row)
             @cols.keys.each do |k|
-                row[k] row.delete(@cols[k])
+                row[k] = row.delete(@cols[k])
             end
         end
     end
