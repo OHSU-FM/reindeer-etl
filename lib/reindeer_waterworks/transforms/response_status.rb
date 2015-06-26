@@ -12,6 +12,7 @@ module ReindeerWaterworks::Transforms
         end
         
         def process(row)
+            binding.pry
             (row.keys - @ignore_cols).each do |k|
                 val = row[k]
                 if _has_code?(val)
