@@ -1,7 +1,7 @@
 require 'csv'
 
-module ReindeerWaterworks::Sources
-    class CSVSource
+module ReindeerETL::Sources
+    class CSVSource < BaseSource
         def initialize path, opts = {}
             @path = path
             @opts = {headers: true, header_converters: :symbol}.merge opts
@@ -9,7 +9,9 @@ module ReindeerWaterworks::Sources
             
         def each
             CSV.foreach(@path, @opts) do |row|
-                yield(row.to_hash)
+                row = row.to_hash
+                @only_cols
+                yield(row.to_hash.each{|v|})
             end
         end
     end

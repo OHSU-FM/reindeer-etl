@@ -8,5 +8,5 @@
 /spec/reports/
 /tmp/
 *.sw*
-reindeer_waterworks-*.gem
+reindeer_etl-*.gem
 

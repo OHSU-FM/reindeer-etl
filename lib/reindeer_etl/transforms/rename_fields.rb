@@ -1,4 +1,4 @@
-module ReindeerWaterworks::Transforms
+module ReindeerETL::Transforms
     ##
     # A simple transform that renames columns
     class RenameFields
@@ -7,11 +7,12 @@ module ReindeerWaterworks::Transforms
         end
         
         def process(row)
-            @cols.keys.each do |k, v|
-                binding.pry
-                row[v.to_sym] = row.delete(k)
-                row
+            counter=0
+            @cols.each do |k, v|
+                next if k == v
+                row[v.to_sym] = row.delete(k.to_sym)
             end
+            row
         end
     end
 

@@ -1,6 +1,6 @@
 require 'csv'
 
-module ReindeerWaterworks::Destinations
+module ReindeerETL::Destinations
     class CSVDest
         def initialize(output_file)
           @csv = CSV.open(output_file, 'w')

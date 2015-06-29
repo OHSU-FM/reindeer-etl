@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'reindeer_waterworks/version'
+require 'reindeer_etl/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "reindeer_waterworks"
-  spec.version       = ReindeerWaterworks::VERSION
+  spec.name          = "reindeer_etl"
+  spec.version       = ReindeerETL::VERSION
   spec.authors       = ["William Hatt", "Patrick Chung"]
   spec.email         = ["hattb@ohsu.edu", "chungp@ohsu.edu"]
 
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.test_files    = Dir.glob("test/**/*.rb")
   spec.bindir        = "bin"
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
 
