@@ -7,7 +7,7 @@ module ReindeerETL::Transforms
         
         # What to replace a code with if one is found
         REP_CODE = '{question_not_shown}'
-        REP_PREFIX = 'responseStatus_'
+        REP_COL_PREFIX = 'responseStatus_'
         
         def initialize opts={}
             @ignore_cols = opts[:ignore] || []
@@ -22,7 +22,7 @@ module ReindeerETL::Transforms
                 else
                     ecode = NO_CODE
                 end
-                row["#{REP_PREFIX}#{k}".to_sym] = "E#{ecode}E"
+                row["#{REP_COL_PREFIX}#{k}"] = "E#{ecode}E"
             end
             row
         end
@@ -31,6 +31,5 @@ module ReindeerETL::Transforms
         def _has_code? val
             ERROR_CODES.include?(val.to_s)
         end
-
     end
 end
