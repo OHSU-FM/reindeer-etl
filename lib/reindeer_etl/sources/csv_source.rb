@@ -4,7 +4,7 @@ module ReindeerETL::Sources
     class CSVSource < BaseSource
         def initialize path, opts = {}
             super
-            @csv_opts = {headers: true}
+            @csv_opts = {headers: true, col_sep: ','}.merge(opts)
         end
             
         def each

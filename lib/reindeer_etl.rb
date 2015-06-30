@@ -22,4 +22,6 @@ require 'reindeer_etl/transforms/response_status'
 
 require 'reindeer_etl/sources/base_source'
 require 'reindeer_etl/sources/csv_source'
+require 'reindeer_etl/sources/multi_source'
+
 require 'reindeer_etl/destinations/csv_dest'
