@@ -10,11 +10,20 @@ module ReindeerETL::Transforms
         REP_COL_PREFIX = 'responseStatus_'
         
         def initialize opts={}
-            @ignore_cols = opts[:ignore] || []
+            @except_cols = (opts[:except] || []).to_set
         end
         
         def process(row)
-            (row.keys - @ignore_cols).each do |k|
+            row_keys = row.keys.to_set
+            unless @except_cols.subset? row_keys
+                x_cols = (@except_cols - row_keys).to_a
+                raise ReindeerETL::Errors::RecordInvalid.new("Missing except keys: #{x_cols}")
+            end
+            (row_keys - @except_cols).each do |k|
+                new_col = "#{REP_COL_PREFIX}#{k.gsub('_','')}" 
+                if row_keys.include? new_col 
+                    raise ReindeerETL::Errors::RecordInvalid.new("Column #{new_col} already exists")
+                end
                 val = row[k]
                 if _has_code?(val)
                     row[k] = REP_CODE
@@ -22,7 +31,7 @@ module ReindeerETL::Transforms
                 else
                     ecode = NO_CODE
                 end
-                row["#{REP_COL_PREFIX}#{k}"] = "E#{ecode}E"
+                row[new_col] = "E#{ecode}E"
             end
             row
         end

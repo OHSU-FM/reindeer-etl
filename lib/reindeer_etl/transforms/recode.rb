@@ -11,18 +11,18 @@ module ReindeerETL::Transforms
         end
         
         def process row
-            binding.pry
             # Raise error unless all columns are present
             unless @cols.subset?(row.keys.to_set)
-                raise ReindeerETL::Errors::RecordInvalid.new('Missing columns')
+                m_cols = @cols - row.keys.to_set
+                raise ReindeerETL::Errors::RecordInvalid.new("Missing columns: #{m_cols.to_a}")
             end
             # Run recode
             @cols.each do |col|
-                # Invalid value
-                unless @any_val.include?(row[col])
-                    raise ReindeerETL::Errors::RecordInvalid.new('Bad value')
-                end
                 val = row[col]
+                # Invalid value
+                unless @any_val.include?(val)
+                    raise ReindeerETL::Errors::RecordInvalid.new("Bad value: #{val}")
+                end
                 unless @ignore_vals.include?(val)
                     row[col] = @codes[val]
                 end
