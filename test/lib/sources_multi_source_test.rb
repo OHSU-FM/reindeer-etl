@@ -7,10 +7,12 @@ describe ReindeerETL::Sources::MultiSource do
         path2 = "#{$dir}/fixtures/comma_delimited_join_on_a.csv" 
         source = ReindeerETL::Sources::MultiSource.new('a', [path1, path2], :klass=>klass)
         rows = []
+        keys = %w[a b c d e f g h i j k l]
         source.each do |row|
             rows.push row
+            row.keys.must_equal keys
         end
-        puts rows
+        rows.count.must_equal 13
     end
 
 end
