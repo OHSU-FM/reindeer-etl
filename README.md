@@ -1,8 +1,6 @@
 # ReindeerETL
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/reindeer_etl`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Sources, Transforms and Destinations for the [Kiba](https://github.com/thbar/kiba) ETL gem
 
 ## Installation
 
@@ -22,7 +20,78 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Simple Example
+
+If you have a csv file that looks like this:
+
+input.csv
+
+```
+a,b,c
+1,2,3
+4,5,6
+```
+
+In your kiba ETL script you can now do this:
+
+
+```ruby
+require 'reindeer-etl'
+
+only_fields = ['a', 'b']
+
+# Open a csv file
+source(ReindeerETL::Sources::CSVSource, './input.csv', 
+    require: only_fields, only: only_fields)
+
+# rename a column
+transform(ReindeerETL::Transforms::RenameFields, {'b'=>'c'}
+
+# Recode all 777 values as 888
+transform ReindeerETL::Transforms::Recode, cols: ['a'],
+    codes: {'777'=>'888'}, ignore_all: true
+
+# Write the file to disk
+destination ReindeerETL::Destinations::CSVDest, './output.csv'
+```
+
+### Joining data from multiple sources
+
+A slightly more complex example is where you have data in multiple CSV files and 
+you would like to join that information into a single ETL job.
+
+input1.csv
+```
+a,b,c
+1,2,3
+4,5,6
+```
+
+input2.csv
+```
+a,e,f
+1,7,8
+4,10,11
+```
+
+reindeer.etl
+```ruby
+# Open a csv file
+source(ReindeerETL::Sources::MultiSource, ['./input1.csv', './input2.csv'], key: 'a')
+
+# Write the file to disk
+destination ReindeerETL::Destinations::CSVDest, './output.csv'
+
+```
+
+output.csv
+```
+a,b,c,e,f
+1,2,3,7,8
+4,5,6,10,11
+```
+
+### More examples coming soon
 
 ## Development
 
