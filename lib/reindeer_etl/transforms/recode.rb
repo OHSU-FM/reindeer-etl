@@ -1,9 +1,9 @@
 module ReindeerETL::Transforms
     class Recode
         def initialize opts={}
-            @cols = (opts[:cols] || []).map{|v|v.to_s}
+            @cols = (opts[:cols] || [])
             @codes = opts[:codes] || {}
-            @ignore_vals = (opts[:ignore] || []).map{|v|v.to_s}
+            @ignore_vals = (opts[:ignore] || [])
             @ignore_all = (opts[:ignore_all] || false)
             @error_on_unknown = !@ignore_all
 
@@ -47,8 +47,6 @@ module ReindeerETL::Transforms
             if @acceptable_keys.include? val
                 row[col] = @codes[val] if @codes.has_key?(val)
             elsif @error_on_unknown
-                binding.pry
-                pp self
                 raise ReindeerETL::Errors::RecordInvalid.new("Invalid value in recode: row# #{@counter} {#{col}:#{val}}")
             end
         end
