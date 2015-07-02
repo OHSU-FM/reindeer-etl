@@ -12,6 +12,9 @@ module ReindeerETL
 
 end
 
+require 'rest-client'
+require 'pp'
+
 require 'reindeer_etl/version'
 require 'reindeer_etl/errors'
 
@@ -25,3 +28,4 @@ require 'reindeer_etl/sources/csv_source'
 require 'reindeer_etl/sources/multi_source'
 
 require 'reindeer_etl/destinations/csv_dest'
+require 'reindeer_etl/destinations/lime_survey_curl'

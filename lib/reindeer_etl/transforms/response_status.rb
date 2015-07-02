@@ -19,6 +19,7 @@ module ReindeerETL::Transforms
                 x_cols = (@except_cols - row_keys).to_a
                 raise ReindeerETL::Errors::RecordInvalid.new("Missing except keys: #{x_cols}")
             end
+            oldrow = row.dup
             (row_keys - @except_cols).each do |k|
                 new_col = "#{REP_COL_PREFIX}#{k.gsub('_','')}" 
                 if row_keys.include? new_col 
@@ -33,6 +34,7 @@ module ReindeerETL::Transforms
                 end
                 row[new_col] = "E#{ecode}E"
             end
+
             row
         end
         
