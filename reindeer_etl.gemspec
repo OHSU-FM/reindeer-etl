@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{A simple ETL pipeline for use with project reindeer and LimeSurvey}
   spec.description   = %q{An ETL pipeline tool for automatic data modifications to LimeSurvey}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.license       = "MIT"
+  spec.homepage      = "https://github.com/OHSU-FM/reindeer-etl"
+  spec.license       = "GPL"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
