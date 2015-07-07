@@ -1,5 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/reindeer-etl.svg)](http://badge.fury.io/rb/reindeer-etl)
-![License](https://img.shields.io/badge/license-GPL-blue.svg)(License.md)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](License.md)
 
 # ReindeerETL
 
