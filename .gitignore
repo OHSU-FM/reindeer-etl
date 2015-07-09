@@ -8,5 +8,5 @@
 /spec/reports/
 /tmp/
 *.sw*
-reindeer_etl-*.gem
+reindeer-etl-*.gem
 

@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'reindeer_etl/version'
+require 'reindeer-etl/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "reindeer_etl"
+  spec.name          = "reindeer-etl"
   spec.version       = ReindeerETL::VERSION
   spec.authors       = ["William Hatt", "Patrick Chung"]
   spec.email         = ["hattb@ohsu.edu", "chungp@ohsu.edu"]
