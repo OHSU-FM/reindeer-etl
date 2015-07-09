@@ -1,35 +1,41 @@
 module ReindeerETL::Transforms
     class Recode
+        attr_accessor :cols
+
         def initialize opts={}
-            @cols = (opts[:cols] || [])
+            @cols = opts[:cols]
+            @except = (opts[:except] || []).to_set
             @codes = opts[:codes] || {}
             @ignore_vals = (opts[:ignore] || [])
             @ignore_all = (opts[:ignore_all] || false)
             @error_on_unknown = !@ignore_all
-
-            raise ArgumentError.new(':cols array must be specified') if @cols.empty?
-            raise ArgumentError.new(':codes must be specified') if @codes.empty?
-            @cols = @cols.to_set
+            
+            if @cols.nil? && opts.keys.include?(:cols)
+                raise ArgumentError.new(':cols array is empty')
+            end
+            @cols = @cols.to_set unless @cols.nil?
+            raise ArgumentError.new(':codes hash is empty') if @codes.empty?
             @acceptable_keys = (@codes.keys + @ignore_vals).to_set
             @counter = 0
         end
-       
+        
         def process row
+            @cols ||= row.keys.to_set - @except
+             
             # Raise error unless all columns are present
-            old_row  = row.dup
             rset = row.keys.to_set
             unless @cols.subset?(rset)
                 m_cols = @cols - rset
                 raise ReindeerETL::Errors::RecordInvalid.new("Missing columns: #{m_cols.to_a}")
             end
-
+            
             # Run recode
             @cols.each do |col| 
                 val = row[col]
                 _validate_val(val)
                 _update_row(row, col, val)
             end
-
+            
             @counter += 1
             row
         end

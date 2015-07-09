@@ -1,3 +1,7 @@
+[![Gem Version](https://badge.fury.io/rb/reindeer-etl.svg)](http://badge.fury.io/rb/reindeer-etl)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](License.md)
+![Downloads](https://img.shields.io/gem/dt/reindeer_etl.svg)
+
 # ReindeerETL
 
 Sources, Transforms and Destinations for the [Kiba](https://github.com/thbar/kiba) ETL gem
@@ -7,7 +11,7 @@ Sources, Transforms and Destinations for the [Kiba](https://github.com/thbar/kib
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'reindeer_etl'
+gem 'reindeer-etl'
 ```
 
 And then execute:
@@ -16,7 +20,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install reindeer_etl
+    $ gem install reindeer-etl
 
 ## Usage
 
@@ -101,7 +105,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/reindeer_etl/fork )
+1. Fork it ( https://github.com/[my-github-username]/reindeer-etl/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
