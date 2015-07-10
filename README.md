@@ -1,3 +1,4 @@
+![Build Status](https://img.shields.io/travis/OHSU-FM/reindeer-etl.svg)
 [![Gem Version](https://badge.fury.io/rb/reindeer-etl.svg)](http://badge.fury.io/rb/reindeer-etl)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](License.md)
 ![Downloads](https://img.shields.io/gem/dt/reindeer-etl.svg)
