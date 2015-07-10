@@ -1,5 +1,6 @@
 language: ruby
 rvm:
   - 2.2.1
-install: gem install bundler --version '>1.9'
-
+install: 
+    - gem install bundler --version '>1.9'
+    - bundle install
