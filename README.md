@@ -2,8 +2,8 @@
 [![Gem Version](https://badge.fury.io/rb/reindeer-etl.svg)](http://badge.fury.io/rb/reindeer-etl)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](License.md)
 ![Downloads](https://img.shields.io/gem/dt/reindeer-etl.svg)
-[![Code Climate](https://codeclimate.com/github/hattwj/rainmaker/badges/gpa.svg)](https://codeclimate.com/github/hattwj/rainmaker)
-[![Test Coverage](https://codeclimate.com/github/hattwj/rainmaker/badges/coverage.svg)](https://codeclimate.com/github/hattwj/rainmaker/coverage)
+[![Code Climate](https://codeclimate.com/github/OHSU-FM/reindeer-etl/badges/gpa.svg)](https://codeclimate.com/github/OHSU-FM/reindeer-etl)
+[![Test Coverage](https://codeclimate.com/github/OHSU-FM/reindeer-etl/badges/coverage.svg)](https://codeclimate.com/github/OHSU-FM/reindeer-etl/coverage)
 
 # ReindeerETL
 
