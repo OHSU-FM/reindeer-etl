@@ -1,3 +1,6 @@
 languages:
   Ruby: true
-  Bash: true
+
+engines:
+  rubocop:
+    enabled: true
