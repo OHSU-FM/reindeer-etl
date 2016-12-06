@@ -1,0 +1,12 @@
+---
+  index: 11
+  class: Q
+  type/scale: F
+  name: G1Q1
+  relevance: '1'
+  text: "Group 1 Question 1"
+  help:
+  language: "en"
+  validation:
+  mandatory: "Y"
+  other: "N"

@@ -1,0 +1,12 @@
+---
+  index: 13
+  class: A
+  type/scale: "0"
+  name: "1"
+  relevance:
+  text: "Very Difficult"
+  help:
+  language: "en"
+  validation:
+  mandatory:
+  other:
