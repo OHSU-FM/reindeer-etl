@@ -35,10 +35,11 @@ module ReindeerETL::Transforms
         end
 
         if k.split("_").length == 3
-          ecode = $ss.code_array(k, val)
+          ecode = $ss.code_array(val)
         else
           ecode = $ss.find_by_name(k, val).code(val)
         end
+        binding.pry if ecode == true
         row[new_col] = "E#{ecode}E"
       end
       row

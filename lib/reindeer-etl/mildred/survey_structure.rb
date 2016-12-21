@@ -143,8 +143,8 @@ class SurveyStructure < Array
     end
   end
 
-  def code_array name, val
-    val.nil? ? "222" : "333"
+  def code_array val
+    (val.nil? or val == "0") ? "222" : "333"
   end
 
   private
