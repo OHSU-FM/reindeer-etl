@@ -1,3 +1,3 @@
 module ReindeerETL::Errors
-    class RecordInvalid < StandardError; end
+  class RecordInvalid < StandardError; end
 end

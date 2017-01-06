@@ -3,14 +3,10 @@ module Rows
     def code val
       ecode = general_checks val
       if ecode.nil?
-        if relevance_condition_met?
-          if ["M", "F"].include? val
-            ecode = "111"
-          else
-            ecode = "999"
-          end
+        if ["M", "F"].include? val
+          ecode = "111"
         else
-          ecode = "777"
+          ecode = "999"
         end
       end
       ecode

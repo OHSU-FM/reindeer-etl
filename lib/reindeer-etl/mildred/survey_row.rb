@@ -44,9 +44,17 @@ class SurveyRow < OpenStruct
     survey_structure.next_row_is_child? self, children
   end
 
+  def group
+    unless is_a_sq? or is_an_a? or is_a_q?
+      raise MildredError::QuestionTypeMismatchError.new("g on q, sq, or a")
+    end
+
+    survey_structure.prev_row_is_g? self
+  end
+
   def parent
     unless is_a_sq? or is_an_a?
-      raise MildredError::QuestionTypeMismatchError.new("sq on q or g")
+      raise MildredError::QuestionTypeMismatchError.new("sq on q, a, or g")
     end
 
     survey_structure.prev_row_is_q? self
@@ -72,11 +80,17 @@ class SurveyRow < OpenStruct
   def general_checks val
     self["self_val"] ||= val
 
+    if survey_structure.lastpage < group.page
+      return "999"
+    end
+
     if val.nil?
       if relevance.include? "NAOK"
         if !relevance_condition_met?
           ecode = "777"
         end
+      elsif is_a_q? && mandatory.nil?
+        ecode = "222"
       end
     elsif val == "{question_not_shown}"
       ecode = "777"

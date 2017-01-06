@@ -1,12 +1,12 @@
 module Rows
-  class ShortFreeText < SurveyRow
+  class Subquestion < SurveyRow
     def code val
       ecode = general_checks val
       if ecode.nil?
-        if !mandatory.nil? && val.nil?
-          ecode = "999"
-        else
+        if !(val.nil? || parent.self_val.nil?) && name == "other"
           ecode = "111"
+        elsif
+          ecode = parent.code(val, self)
         end
       end
       ecode

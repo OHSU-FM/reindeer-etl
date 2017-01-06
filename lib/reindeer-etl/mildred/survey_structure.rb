@@ -2,6 +2,7 @@ require "csv"
 
 class SurveyStructure < Array
   attr_reader :headers
+  attr_reader :lastpage
 
   ROWS_DICT = {
     "1" => "ArrayDual",
@@ -34,8 +35,9 @@ class SurveyStructure < Array
     "|" => "FileUpload"
   }
 
-  def initialize file, opts = {}
+  def initialize file, lastpage=nil, opts = {}
     @csv_opts = {headers: true, col_sep: "\t", quote_char: "*"}.merge(opts)
+    @lastpage = lastpage
     read_file file
   end
 
@@ -82,6 +84,7 @@ class SurveyStructure < Array
       find_by(name: name[0])
     when 2
       c = find_by(name: name[0]).subquestions.select{|child| child.name == name[1] }
+      return find_by(name: name[0]) if c == []
       c.length == 1 ? c.first : c
     else
       code_array val
@@ -131,6 +134,15 @@ class SurveyStructure < Array
     end
   end
 
+  def prev_row_is_g? row
+    prev_row = find(row.index - 1)
+    if prev_row.is_a_g?
+      return prev_row
+    else
+      prev_row_is_g? prev_row
+    end
+  end
+
   def answers_for_row row, ary
     next_row = find(row.index + 1)
     if next_row.nil? or next_row.is_a_q? or next_row.is_a_g?
@@ -151,7 +163,8 @@ class SurveyStructure < Array
 
   def read_file file
     CSV.foreach(file, @csv_opts).with_index(0) do |r, idx|
-      if r["class"] == "Q"
+      case r["class"]
+      when "Q"
         if ROWS_DICT.keys.include? r["type/scale"]
           begin
             row = Object.const_get("Rows").const_get("#{ROWS_DICT[r["type/scale"]]}").new()
@@ -162,11 +175,14 @@ class SurveyStructure < Array
         else
           raise MildredError::UnknownRowError r["type/scale"]
         end
-      elsif r["class"] == "SQ"
+      when "SQ"
         row = Rows::Subquestion.new()
+      when "G"
+        row = Rows::Group.new()
       else
         row = SurveyRow.new()
       end
+
       row["index"] = idx
       r.first(10).each do |h, r|
         row[h] = r

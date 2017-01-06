@@ -3,20 +3,9 @@ module Rows
     def code val, sq=nil
       ecode = general_checks val
       if ecode.nil?
-        if val.nil?
-          if mandatory == "Y"
-            ecode = "999"
-          else
-            ecode = "222"
-          end
-          if relevance.include? "NAOK"
-            if relevance_condition_met?
-              ecode = "999"
-            else
-              ecode = "777"
-            end
-          end
-        elsif !val.nil?
+        if !mandatory.nil? && val.nil?
+          ecode = "999"
+        else
           ecode = "111"
         end
       end

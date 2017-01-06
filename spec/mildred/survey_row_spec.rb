@@ -59,6 +59,11 @@ describe SurveyRow do
       expect(@row.children).to include @sq
     end
 
+    it "#group" do
+      @g = row_from_fixture("mildred/group_row")
+      expect(@row.group).to eq @g
+    end
+
     it "#parent" do
       expect{@row.parent}.to raise_error MildredError::QuestionTypeMismatchError
     end
@@ -89,12 +94,21 @@ describe SurveyRow do
       expect(@row.is_a_sq?).to be_truthy
     end
 
+    it "#is_a_g?" do
+      expect(@row.is_a_g?).to be_falsey
+    end
+
     it "#has_children?" do
       expect{@row.has_children?}.to raise_error MildredError::QuestionTypeMismatchError
     end
 
     it "#children" do
       expect{@row.children}.to raise_error MildredError::QuestionTypeMismatchError
+    end
+
+    it "#group" do
+      @g = row_from_fixture("mildred/group_row")
+      expect(@row.group).to eq @g
     end
 
     it "#parent" do
@@ -128,12 +142,21 @@ describe SurveyRow do
       expect(@row.is_an_a?).to be_truthy
     end
 
+    it "#is_a_g?" do
+      expect(@row.is_a_g?).to be_falsey
+    end
+
     it "#has_children?" do
       expect{@row.has_children?}.to raise_error MildredError::QuestionTypeMismatchError
     end
 
     it "#children" do
       expect{@row.children}.to raise_error MildredError::QuestionTypeMismatchError
+    end
+
+    it "#group" do
+      @g = row_from_fixture("mildred/group_row")
+      expect(@row.group).to eq @g
     end
 
     it "#parent" do

@@ -1,16 +1,19 @@
 module ReindeerETL::Transforms
   class ResponseStatus
-    # designatorr reindeer stats cols
+    # designator for reindeer stats cols
     REP_COL_PREFIX = "responseStatus_"
 
     def initialize path, opts={}
       @path = path
       @except_cols = (opts[:except] || []).to_set
+      @idx = 0
     end
 
     def process(row)
+      @idx += 1
+      pp @idx
       # get a fresh survey_structure from Mildred for each row
-      $ss = SurveyStructure.new(@path)
+      $ss = SurveyStructure.new(@path, row["lastpage"].to_i)
 
       row = row.reject{|e| e.nil? } # nil values screw things up
       row_keys = row.keys.to_set
@@ -35,11 +38,23 @@ module ReindeerETL::Transforms
         end
 
         if k.split("_").length == 3
-          ecode = $ss.code_array(val)
+          if $ss.lastpage < $ss.find_by_name(k.split("_")[0], nil).group.page
+            ecode = "999"
+          else
+            ecode = $ss.code_array(val)
+          end
         else
-          ecode = $ss.find_by_name(k, val).code(val)
+          q = $ss.find_by_name(k, val)
+          if !q.respond_to? :code
+            ReindeerETL::Errors::RecordInvalid.new("SurveyStructure row '#{k}' does not respond to #code. Add as except_col?")
+          end
+          ecode = q.code(val)
+          # if row["id"] == "16"
+          #   binding.pry if k == "PrCPrimOutSet_other"
+          # else
+          #   return
+          # end
         end
-        binding.pry if ecode == true
         row[new_col] = "E#{ecode}E"
       end
       row

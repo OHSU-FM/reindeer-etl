@@ -1,6 +1,6 @@
 module Rows
-  class ShortFreeText < SurveyRow
-    def code val
+  class HugeFreeText < SurveyRow
+    def code val, sq=nil
       ecode = general_checks val
       if ecode.nil?
         if !mandatory.nil? && val.nil?

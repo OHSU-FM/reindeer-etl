@@ -1,7 +1,12 @@
 ---
-index: 4
+index: 10
 class: G
-type/scale: G0
-name: Group 0
-relevance: '1'
-text:
+type/scale: G1
+name: Group 1
+relevance:
+text: en
+help:
+language:
+validation:
+mandatory:
+other:
