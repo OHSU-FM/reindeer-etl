@@ -1,3 +1,5 @@
+require 'progress_bar'
+
 module ReindeerETL::Transforms
   class ResponseStatus
     # designator for reindeer stats cols
@@ -6,12 +8,11 @@ module ReindeerETL::Transforms
     def initialize path, opts={}
       @path = path
       @except_cols = (opts[:except] || []).to_set
-      @idx = 0
+      @bar = ProgressBar.new($length)
     end
 
     def process(row)
-      @idx += 1
-      pp @idx
+      @bar.increment!
       # get a fresh survey_structure from Mildred for each row
       $ss = SurveyStructure.new(@path, row["lastpage"].to_i)
 

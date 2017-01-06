@@ -5,6 +5,7 @@ module ReindeerETL::Sources
     def initialize path, opts = {}
       super
       @csv_opts = {headers: true, col_sep: ','}.merge(opts)
+      $length = File.open(path, 'r').readlines.length
     end
 
     def each
