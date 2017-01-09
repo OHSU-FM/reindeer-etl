@@ -12,6 +12,7 @@ module ReindeerETL::Transforms
     end
 
     def process(row)
+      binding.pry
       @bar.increment!
       # get a fresh survey_structure from Mildred for each row
       $ss = SurveyStructure.new(@path, row["lastpage"].to_i)
