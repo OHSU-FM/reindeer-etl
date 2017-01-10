@@ -19,3 +19,5 @@ require_relative "reindeer-etl/sources/multi_source"
 require_relative "reindeer-etl/destinations/csv_dest"
 
 require_relative "reindeer-etl/reindeer_helper"
+
+Dir["./reindeer-etl/lib/reindeer-etl/modules/*/*"].each {|f| require f }
