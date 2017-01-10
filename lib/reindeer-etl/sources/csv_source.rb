@@ -17,7 +17,7 @@ module ReindeerETL::Sources
             raise ReindeerETL::Errors::RecordInvalid.new('Duplicate columns')
           end
         end
-        row = row.to_hash
+        row = row.to_hash.delete_if{|k,v| k.nil? && v.nil? }
         simple_transforms(row)
         yield(row)
       end
