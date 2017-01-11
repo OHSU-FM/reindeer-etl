@@ -65,15 +65,13 @@ module ReindeerETL::Sources
                 if row.keys.map {|k| k[h_regex, 1] }.include? underscored_tar
                   k = row.keys.select{|k| k[h_regex, 1] == underscored_tar }.first
                   hash = h_hash_maker sidx, underscored_tar, row[k]
-                  rows[rindex] = rows[rindex].merge(hash)
-                  # rows[rindex] = rows[rindex].merge(row.select{|key, v| key == k })
+                  rows[rindex].merge!(hash)
                 else
-                  v=Object.const_get("ReindeerETL::Mods::#{@namespace}::#{tar}").get(row)
-                  rows[rindex] = rows[rindex].merge({
-                  " attribute_#{sidx + 1} <#{h_underscore_string tar}>" => v
-                  })
+                  val = Object
+                        .const_get("ReindeerETL::Mods::#{@namespace}::#{tar}")
+                        .get(row)
+                  rows[rindex].merge!(h_hash_maker(sidx, tar, val))
                 end
-                binding.pry
               end
             end
           end
