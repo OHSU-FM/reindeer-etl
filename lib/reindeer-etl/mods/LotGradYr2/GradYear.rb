@@ -1,9 +1,9 @@
 module ReindeerETL
   module Mods
     module LotGradYr2
-      class GradYear < Object
-        def get
-          binding.pry
+      module GradYear
+        def self.get row
+          "2014"
         end
       end
     end

@@ -7,4 +7,12 @@ module ReindeerHelper
       tr("-", "_").
       downcase
   end
+
+  def h_regex
+    /.*<([^>]*)/
+  end
+
+  def h_hash_maker sidx, target, result
+    {" attribute_#{sidx + 1} <#{h_underscore_string target}>" => result}
+  end
 end

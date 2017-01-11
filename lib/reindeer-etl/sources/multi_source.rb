@@ -60,16 +60,20 @@ module ReindeerETL::Sources
             if source_targets.empty?
               rows[rindex] = rows[rindex].merge(row)
             else
-              source_targets.each do |tar|
+              source_targets.each_with_index do |tar, sidx|
                 underscored_tar = h_underscore_string tar
-                if row.keys.map {|k| k[/.*<([^>]*)/, 1] }.include? underscored_tar
-                  k = row.keys.select{|k| k[/.*<([^>]*)/, 1] == tar }.first
-                  rows[rindex] = rows[rindex].merge(row.select{|key, v| key == k })
+                if row.keys.map {|k| k[h_regex, 1] }.include? underscored_tar
+                  k = row.keys.select{|k| k[h_regex, 1] == underscored_tar }.first
+                  hash = h_hash_maker sidx, underscored_tar, row[k]
+                  rows[rindex] = rows[rindex].merge(hash)
+                  # rows[rindex] = rows[rindex].merge(row.select{|key, v| key == k })
                 else
-                  t=Object.const_get("ReindeerETL::Mods::#{@namespace}::#{tar}").new()
-                  binding.pry
-                  # TODO find it some other way!!!!!!!!!!!!!!!!!!
+                  v=Object.const_get("ReindeerETL::Mods::#{@namespace}::#{tar}").get(row)
+                  rows[rindex] = rows[rindex].merge({
+                  " attribute_#{sidx + 1} <#{h_underscore_string tar}>" => v
+                  })
                 end
+                binding.pry
               end
             end
           end
