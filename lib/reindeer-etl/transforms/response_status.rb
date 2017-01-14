@@ -11,7 +11,7 @@ module ReindeerETL::Transforms
       @bar = ProgressBar.new($length)
     end
 
-    def process(row)
+    def process row
       binding.pry
       @bar.increment!
       # get a fresh survey_structure from Mildred for each row
@@ -51,11 +51,6 @@ module ReindeerETL::Transforms
             ReindeerETL::Errors::RecordInvalid.new("SurveyStructure row '#{k}' does not respond to #code. Add as except_col?")
           end
           ecode = q.code(val)
-          # if row["id"] == "16"
-          #   binding.pry if k == "PrCPrimOutSet_other"
-          # else
-          #   return
-          # end
         end
         row[new_col] = "E#{ecode}E"
       end
