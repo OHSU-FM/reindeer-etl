@@ -1,5 +1,5 @@
 module ReindeerETL::Mods
-  module LotGradYr2
+  module LotGradYr3
     module LotProgramCivilian
       extend ReindeerHelper
 

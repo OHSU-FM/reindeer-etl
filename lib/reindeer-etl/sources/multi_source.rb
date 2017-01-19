@@ -46,7 +46,7 @@ module ReindeerETL::Sources
           if source_idx == 0 # first source
             rows << row
           else
-            source_targets = @target_cols[source_idx - 1]
+            source_targets = @target_cols[source_idx - 1] unless @target_cols.nil?
             rindex = rows.index{|r| r[@key] == row[@key] }
 
             if rindex.nil?
@@ -57,20 +57,20 @@ module ReindeerETL::Sources
               end
             end
 
-            if source_targets.empty?
+            if source_targets.nil? or source_targets.empty?
               rows[rindex] = rows[rindex].merge(row)
             else
               source_targets.each_with_index do |tar, sidx|
                 underscored_tar = h_underscore_string tar
                 if row.keys.map {|k| k[h_regex, 1] }.include? underscored_tar
                   k = row.keys.select{|k| k[h_regex, 1] == underscored_tar }.first
-                  hash = h_hash_maker sidx, underscored_tar, row[k]
+                  hash = h_hash_maker tar, row[k]
                   rows[rindex].merge!(hash)
                 else
                   val = Object
                         .const_get("ReindeerETL::Mods::#{@namespace}::#{tar}")
                         .get(row)
-                  rows[rindex].merge!(h_hash_maker(sidx, tar, val))
+                  rows[rindex].merge!(h_hash_maker(tar, val))
                 end
               end
             end

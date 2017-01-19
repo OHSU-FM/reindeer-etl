@@ -1,13 +1,14 @@
 module ReindeerETL::Mods
-  module LotGradYr2
-    module LotProgramCivilian
+  module LotGradYr3
+    module LotProgramAlias
       extend ReindeerHelper
 
       def self.get row
         k = row.keys.select{ |k|
           k[h_regex, 1] == "lot_program_id"
         }.first
-        ReindeerHelper::LOT_NAVY_PROGRAMS.include?(row[k]) ? "Y" : "N"
+        binding.pry if k == "A08"
+        ReindeerHelper::LOT_ID_ALIAS[row[k]]
       end
     end
   end
