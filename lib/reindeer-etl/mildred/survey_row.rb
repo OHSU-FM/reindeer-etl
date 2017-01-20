@@ -80,7 +80,7 @@ class SurveyRow < OpenStruct
   def general_checks val
     self["self_val"] ||= val
 
-    if survey_structure.lastpage < group.page
+    if survey_structure.lastpage < group.page and !survey_structure.complete
       return "999"
     end
 

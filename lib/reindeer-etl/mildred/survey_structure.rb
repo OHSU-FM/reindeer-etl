@@ -3,6 +3,7 @@ require "csv"
 class SurveyStructure < Array
   attr_reader :headers
   attr_reader :lastpage
+  attr_reader :complete
 
   ROWS_DICT = {
     "1" => "ArrayDual",
@@ -35,9 +36,10 @@ class SurveyStructure < Array
     "|" => "FileUpload"
   }
 
-  def initialize file, lastpage=nil, opts = {}
+  def initialize file, lastpage=nil, complete=false, opts={}
     @csv_opts = {headers: true, col_sep: "\t", quote_char: "*"}.merge(opts)
     @lastpage = lastpage
+    @complete = complete
     read_file file
   end
 

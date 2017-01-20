@@ -5,16 +5,18 @@ module ReindeerETL::Transforms
     # designator for reindeer stats cols
     REP_COL_PREFIX = "responseStatus_"
 
+    # @param complete [Boolean] optional flag to skip incomplete response check
     def initialize path, opts={}
       @path = path
       @except_cols = (opts[:except] || []).to_set
+      @complete = opts[:complete]
       @bar = ProgressBar.new($length)
     end
 
     def process row
       @bar.increment!
       # get a fresh survey_structure from Mildred for each row
-      $ss = SurveyStructure.new(@path, row["lastpage"].to_i)
+      $ss = SurveyStructure.new(@path, row["lastpage"].to_i, @complete)
 
       row = row.reject{|e| e.nil? } # nil values screw things up
       row_keys = row.keys.to_set
@@ -39,7 +41,8 @@ module ReindeerETL::Transforms
         end
 
         if k.split("_").length == 3
-          if $ss.lastpage < $ss.find_by_name(k.split("_")[0], nil).group.page
+          if ($ss.lastpage < $ss.find_by_name(k.split("_")[0], nil).group.page) and
+              !$ss.complete
             ecode = "999"
           else
             ecode = $ss.code_array(val)
@@ -51,6 +54,9 @@ module ReindeerETL::Transforms
           end
           ecode = q.code(val)
         end
+        # if ecode == "999" and ![65,70,72,75,87,89,135,136,137,146,148,153,159,160,162,163,172,221,237].include? q.index
+        #   binding.pry
+        # end
         row[new_col] = "E#{ecode}E"
       end
       row
