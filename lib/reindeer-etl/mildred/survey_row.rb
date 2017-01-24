@@ -87,7 +87,7 @@ class SurveyRow < OpenStruct
     if val.nil?
       if relevance.include? "NAOK"
         if !relevance_condition_met?
-          ecode = "777"
+          ecode = relevance_q.self_val.nil? ? "999" : "777"
         end
       elsif is_a_q? && mandatory.nil?
         ecode = "222"
@@ -99,9 +99,15 @@ class SurveyRow < OpenStruct
   end
 
   def relevance_condition_met?
-    t=relevance[/\(\((.*?)\)\)/m, 1]
+    t = relevance[/\(\((.*?)\)\)/m, 1]
     q = t.split(".")[0]
     tar = t[/\"(.*?)\"/m, 1]
     survey_structure.find_by_name(q, nil).self_val == tar ? true : false
+  end
+
+  def relevance_q
+    t = relevance[/\(\((.*?)\)\)/m, 1]
+    q = t.split(".")[0]
+    survey_structure.find_by_name(q, nil)
   end
 end

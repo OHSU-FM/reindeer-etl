@@ -54,9 +54,6 @@ module ReindeerETL::Transforms
           end
           ecode = q.code(val)
         end
-        # if ecode == "999" and ![65,70,72,75,87,89,135,136,137,146,148,153,159,160,162,163,172,221,237].include? q.index
-        #   binding.pry
-        # end
         row[new_col] = "E#{ecode}E"
       end
       row
