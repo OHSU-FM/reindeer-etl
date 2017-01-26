@@ -37,7 +37,7 @@ class SurveyStructure < Array
   }
 
   def initialize file, lastpage=nil, complete=false, opts={}
-    @csv_opts = {headers: true, col_sep: "\t", quote_char: "*"}.merge(opts)
+    @csv_opts = {headers: true, col_sep: "\t", quote_char: "^"}.merge(opts)
     @lastpage = lastpage
     @complete = complete
     read_file file

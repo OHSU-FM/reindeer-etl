@@ -5,7 +5,7 @@ module ReindeerETL::Transforms
     # designator for reindeer stats cols
     REP_COL_PREFIX = "responseStatus_"
 
-    # @param complete [Boolean] optional flag to skip incomplete response check
+    # @param complete [Boolean] skips incomplete response check if true
     def initialize path, opts={}
       @path = path
       @except_cols = (opts[:except] || []).to_set
