@@ -2,7 +2,7 @@ require "rspec"
 require "yaml"
 require "pry"
 
-require_relative "../lib/reindeer-etl/mildred/mildred"
+require_relative "../lib/reindeer-etl"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
